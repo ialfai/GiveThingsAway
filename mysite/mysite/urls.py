@@ -15,7 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from GiveStuff.views import LandingPage, Login, Register, AddDonation
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', LandingPage.as_view()),
+    path('login/', Login.as_view(), name='login'),
+    path('Register/', Register.as_view(), name='register'),
+    path('AddDonation/', AddDonation.as_view()),
+
 ]
