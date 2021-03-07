@@ -19,7 +19,7 @@ from GiveStuff.views import LandingPage, Login, Register, AddDonation
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', LandingPage.as_view()),
+    path('', LandingPage.as_view(), name='main'),
     path('login/', Login.as_view(), name='login'),
     path('Register/', Register.as_view(), name='register'),
     path('AddDonation/', AddDonation.as_view()),
