@@ -1,10 +1,11 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import FormView
 from django.contrib.auth.models import User
 
-from .models import Donation, Institution
+from .models import Donation, Institution, Category
 from .forms import RegistrationForm, LoginForm
 
 # - uruchom aplikację i zweryfikuj, czy pliki statyczne poprawnie się ładują.
@@ -25,18 +26,32 @@ class LandingPage(View):
         foundations = Institution.objects.filter(type=1)
         local = Institution.objects.filter(type=3)
         ngo = Institution.objects.filter(type=2)
+        user = request.user
+        print(user)
         return render(request, 'index.html', {'bags_number': bags_number,
                                               'organization_number': organization_number,
                                               'foundations': foundations,
                                               'local': local,
                                               'ngo': ngo,
+                                              'user': user
                                               })
 
 
-class AddDonation(View):
+class AddDonation(LoginRequiredMixin, View):
+    login_url = '/login'
+    redirect_field_name = 'redirect_to'
 
     def get(self, request):
-        return render(request, 'form.html')
+        categories = Category.objects.all()
+        institutions = Institution.objects.all()
+        if request.user.is_authenticated:
+            user = request.user
+            return render(request, 'form.html', {'user': user,
+                                                 'categories': categories,
+                                                 'institutions': institutions})
+        else:
+            return render(request, 'form.html', {'categories': categories,
+                                                 'institutions': institutions})
 
 
 class Login(View):
@@ -62,24 +77,32 @@ class Login(View):
                                                   'info': 'Niepoprawne dane logowania1'})
 
 
-class Register(View):
+class Register(FormView):
+    form_class = RegistrationForm
+    success_url = '/'
+    template_name = 'register.html'
+
+    def form_valid(self, form):
+        User.objects.create_user(username=form.cleaned_data['username'],
+                                 password=form.cleaned_data['password'],
+                                 email=form.cleaned_data['email'],
+                                 first_name=form.cleaned_data['first_name'],
+                                 last_name=form.cleaned_data['last_name'])
+        return super().form_valid(form)
+
+
+class Logout(View):
 
     def get(self, request):
-        form = RegistrationForm()
-        return render(request, 'register.html', {'form': form})
+        logout(request)
+        return redirect('/')
 
-    def post(self, request):
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            User.objects.create_user(username=form.cleaned_data['username'],
-                                     password=form.cleaned_data['password'],
-                                     email=form.cleaned_data['email'],
-                                     first_name=form.cleaned_data['first_name'],
-                                     last_name=form.cleaned_data['last_name'])
-            return redirect('/login/')
-        else:
-            return render(request, 'register.html', {'form': form,
-                                                     'info': 'Niepoprawne dane'})
+
+class Profil(View):
+
+    def get(self, request):
+        user = request.user
+        return render(request, 'profile.html', {'user': user})
 
 
 

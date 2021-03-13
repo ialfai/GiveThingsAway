@@ -66,6 +66,7 @@ document.addEventListener("DOMContentLoaded", function() {
       console.log(page);
     }
   }
+
   const helpSection = document.querySelector(".help");
   if (helpSection !== null) {
     new Help(helpSection);
@@ -136,6 +137,7 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     }
   }
+
   document.querySelectorAll(".form-group--dropdown select").forEach(el => {
     new FormSelect(el);
   });
@@ -143,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function() {
   /**
    * Hide elements when clicked on document
    */
-  document.addEventListener("click", function(e) {
+  document.addEventListener("click", function (e) {
     const target = e.target;
     const tagName = target.tagName;
 
@@ -248,8 +250,28 @@ document.addEventListener("DOMContentLoaded", function() {
       this.updateForm();
     }
   }
+
   const form = document.querySelector(".form--steps");
   if (form !== null) {
     new FormSteps(form);
   }
+
+  let listOfCategories = document.querySelectorAll("#categoriesOfThings")
+  console.log(listOfCategories)
+  let CategoriIDs = []
+
+  for (let i=0; i<listOfCategories.length; ++i){
+            console.log('dupa')
+            console.log(listOfCategories[i].)
+    }
+
+
+
+  CategoriIDs = document.querySelector('.categoryCheckbox:checked').value
+  console.log('values:' ,document.querySelector('.categoryCheckbox:checked').value)
+
+
+
+console.log(CategoriIDs)
+
 });

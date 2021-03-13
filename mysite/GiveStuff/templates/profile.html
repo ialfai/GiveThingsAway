@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include "header.html" %}
+{% load static %}
+ <section id="about-us" class="about-us" style="background-color: white" >
+      <div class="about-us--text" >
+        <h2>Imię: {{user.first_name}}</h2>
+        <h2>Nazwisko: {{user.last_name}}</h2>
+        <h2>Email: {{user.Email}}</h2>
+        <img src="{% static 'images/signature.svg'%}" class="about-us--text-signature" alt="Signature" />
+      </div>
+<!--      <div class="about-us&#45;&#45;image"><img src="{%static 'images/about-us.jpg'%}" alt="People in circle" /></div>-->
+    </section>
+
+
+
+
+{% endblock %}
