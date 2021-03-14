@@ -7,7 +7,7 @@ from django.views.generic import FormView
 from django.contrib.auth.models import User
 
 from .models import Donation, Institution, Category
-from .forms import RegistrationForm, LoginForm
+from .forms import RegistrationForm, LoginForm, IsTaken
 
 # - uruchom aplikację i zweryfikuj, czy pliki statyczne poprawnie się ładują.
 
@@ -102,10 +102,30 @@ class Logout(View):
 class Profil(View):
 
     def get(self, request):
+        form = IsTaken()
         user = request.user
-        donations = Donation.objects.filter(user=user)
+        donations = Donation.objects.filter(user=user, is_taken=False)
+        archived_donations = Donation.objects.filter(is_taken=True, user=user)
         return render(request, 'profile.html', {'user': user,
-                                                'donations': donations})
+                                                'donations': donations,
+                                                'form': form,
+                                                'archived_donations': archived_donations})
+
+    def post(self, request):
+        form = IsTaken(request.POST)
+        donation_id = int(request.POST.get('hidden'))
+        odebrana = request.POST.get('odebrana')
+        donation = Donation.objects.get(id=donation_id)
+        if odebrana:
+            donation.is_taken = True
+            donation.save()
+        user = request.user
+        donations = Donation.objects.filter(user=user, is_taken=False)
+        archived_donations = Donation.objects.filter(is_taken=True, user=user)
+        return render(request, 'profile.html', {'info': "dotacja została zarchiwizowana",
+                                                'user': user,
+                                                'donations': donations,
+                                                'archived_donations': archived_donations})
 
 
 class Data(View):

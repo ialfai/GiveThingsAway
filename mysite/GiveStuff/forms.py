@@ -27,6 +27,9 @@ class LoginForm(forms.Form):
     password = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
 
 
+class IsTaken(forms.Form):
+    is_taken = forms.BooleanField(label='')
+
 
 
 

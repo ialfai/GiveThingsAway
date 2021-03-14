@@ -23,7 +23,13 @@
           <li>
             <div class="col">
               <div class="title">{{i.institution}}, {{i.quantity}} worków </div>
-              <div class="subtitle">data przekazania:{{i.pick_up_date}}</div>
+              <div class="subtitle">data przekazania:{{i.pick_up_date}}<br><br>
+            <form method="post">
+                {% csrf_token %}
+                <input name="hidden" type="hidden" value={{i.id}}>
+                <label for="hidden" id="hidden"></label>
+                <input type="submit" id="odebrana" name="odebrana" value="odebrana">
+                </form></div>
             </div>
 
             <div class="col"><div class="text">{%for n in i.categories.all%}{{n.name}},
@@ -31,17 +37,38 @@
 
           </li>
 
+            <br><br>
+
           {% endfor %}
 
         </ul>
 
+
+              <ul class="help--slides-items">
+          {%for i in archived_donations%}
+          <li>
+            <div class="col">
+              <div class="title">{{i.institution}}, {{i.quantity}} worków </div>
+              <div class="subtitle">data przekazania:{{i.pick_up_date}} - paczka odebrana</div>
+            </div>
+
+            <div class="col"><div class="text">{%for n in i.categories.all%}{{n.name}},
+                  {% endfor %}</div></div>
+
+          </li>
+          {% endfor %}
+
+        </ul>
+
+
      </div>
 
         <img src="{% static 'images/signature.svg'%}" class="about-us--text-signature" alt="Signature" />
+
+
+
+
+</section>
       </div>
-    </section>
-
-
-
-
+ </section>
 {% endblock %}
