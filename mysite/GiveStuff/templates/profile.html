@@ -7,10 +7,38 @@
       <div class="about-us--text" >
         <h2>Imię: {{user.first_name}}</h2>
         <h2>Nazwisko: {{user.last_name}}</h2>
-        <h2>Email: {{user.Email}}</h2>
+          <h2>Email: {{user.Email}}</h2>
+
+        <div class="slogan container container--90"
+        <div class="slogan--item">
+        </div>
+
+     <section id="help" class="help">
+      <h2>Jakie organizacje wsparłeś:</h2>
+
+         <div class="help--slides active" data-id="1">
+
+        <ul class="help--slides-items">
+          {%for i in donations%}
+          <li>
+            <div class="col">
+              <div class="title">{{i.institution}}, {{i.quantity}} worków </div>
+              <div class="subtitle">data przekazania:{{i.pick_up_date}}</div>
+            </div>
+
+            <div class="col"><div class="text">{%for n in i.categories.all%}{{n.name}},
+                  {% endfor %}</div></div>
+
+          </li>
+
+          {% endfor %}
+
+        </ul>
+
+     </div>
+
         <img src="{% static 'images/signature.svg'%}" class="about-us--text-signature" alt="Signature" />
       </div>
-<!--      <div class="about-us&#45;&#45;image"><img src="{%static 'images/about-us.jpg'%}" alt="People in circle" /></div>-->
     </section>
 
 

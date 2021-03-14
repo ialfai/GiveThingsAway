@@ -257,21 +257,57 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   let listOfCategories = document.querySelectorAll("#categoriesOfThings")
-  console.log(listOfCategories)
+
   let CategoriIDs = []
 
   for (let i=0; i<listOfCategories.length; ++i){
-            console.log('dupa')
-            console.log(listOfCategories[i].)
+            let obecnyGuzik = listOfCategories[i]
+            obecnyGuzik.addEventListener('change', function (e){
+              let a = e.target.value
+              CategoriIDs.push(a)
+
+              }
+            )
     }
 
-
-
-  CategoriIDs = document.querySelector('.categoryCheckbox:checked').value
-  console.log('values:' ,document.querySelector('.categoryCheckbox:checked').value)
-
-
-
 console.log(CategoriIDs)
+
+function makeid() {
+    var result = ''
+    let CategoriIDs = []
+      for (let i=0; i<listOfCategories.length; ++i){
+            let obecnyGuzik = listOfCategories[i]
+            obecnyGuzik.addEventListener('change', function (e){
+              let a = e.target.value
+              CategoriIDs.push(a)
+let result = CategoriIDs
+              }
+            )
+    }
+    $.ajax({
+        type: "GET",
+        url: '/my_def_in_view',
+        data: {
+            "result": result,
+        },
+        dataType: "json",
+        success: function (data) {
+            // any process in data
+            alert("successfull")
+        },
+        failure: function () {
+            alert("failure");
+        }
+    });
+}
+
+let guzik_dalej = document.querySelector('#guzik_dalej')
+
+guzik_dalej.addEventListener('click', function (e){
+  makeid()
+})
+
+
+
 
 });

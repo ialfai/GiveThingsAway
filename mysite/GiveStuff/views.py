@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import FormView
@@ -102,9 +103,15 @@ class Profil(View):
 
     def get(self, request):
         user = request.user
-        return render(request, 'profile.html', {'user': user})
+        donations = Donation.objects.filter(user=user)
+        return render(request, 'profile.html', {'user': user,
+                                                'donations': donations})
 
 
+class Data(View):
 
+    def get(self, request, result):
+        result = request.GET.get('result', None)
+        return JsonResponse(result)
 
 
