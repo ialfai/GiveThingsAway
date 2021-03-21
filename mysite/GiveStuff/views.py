@@ -5,6 +5,8 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import FormView
 from django.contrib.auth.models import User
+import json
+from django.forms.models import model_to_dict
 
 from .models import Donation, Institution, Category
 from .forms import RegistrationForm, LoginForm, IsTaken
@@ -130,8 +132,22 @@ class Profil(View):
 
 class Data(View):
 
-    def get(self, request, result):
-        result = request.GET.get('result', None)
-        return JsonResponse(result)
+    def get(self, request):
+        result = request.GET.getlist('result[]')
+        lista = []
+        for i in result:
+            lista.append(int(i))
+
+
+        categoriess = Category.objects.filter(id__in=lista)
+        institutions = Institution.objects.filter(categories__in=categoriess).distinct()
+        institutionss = {}
+        for i in institutions:
+            institutionss[i.id] = i.name
+
+        response = JsonResponse({'institutionss': institutionss})
+        return response
+
+
 
 
