@@ -187,6 +187,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 )
             }
+
+
             this.$next = form.querySelectorAll(".next-step");
             this.$prev = form.querySelectorAll(".prev-step");
             this.$step = form.querySelector(".form--steps-counter span");
@@ -340,7 +342,12 @@ let StepFour = document.querySelector('#StepFour')
             })
         }
     )
+    let bags_number = document.querySelector('#worki')
+    console.log(bags_number)
 
+    bags_number.addEventListener('keyup', function(e){
+        console.log(e.target.value)
+    })
 
 //   let listOfCategories = document.querySelectorAll("#categoriesOfThings")
 //
