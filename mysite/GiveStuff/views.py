@@ -144,10 +144,15 @@ class Data(View):
         institutionss = {}
         for i in institutions:
             institutionss[i.id] = i.name
-
-        response = JsonResponse({'institutionss': institutionss})
+        print(institutionss)
+        response = JsonResponse(institutionss)
         return response
 
+
+class Worki(View):
+
+    def get(self, request):
+        pass
 
 
 

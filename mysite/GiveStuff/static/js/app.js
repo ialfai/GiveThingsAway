@@ -244,6 +244,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     e.preventDefault();
                     this.currentStep--;
                     this.updateForm();
+
                 });
             });
 
@@ -291,6 +292,56 @@ document.addEventListener("DOMContentLoaded", function () {
         document.formStep = new FormSteps(form);
     }
 //
+const apihost = 'my_def_in_view'
+let btn2 = document.querySelector('#step4')
+
+let StepFour = document.querySelector('#StepFour')
+
+
+    btn2.addEventListener("click", function(e){
+          let div4 = document.createElement('div')
+                div4.class = "form-group form-group--checkbox"
+        StepFour.appendChild(div4)
+        let label = document.createElement('label')
+        div4.appendChild(label)
+        console.log(div4)
+
+
+    }).then(
+        fetch(apihost).then(
+        function(resp){
+            if (!resp.pl){
+                alert('brak jsona')
+            }
+            return resp.json
+        }
+    ))
+.then(
+        function(response) {
+            return response.forEach(function (el){
+                console.log(el)
+            //     let input = createElement('input')
+            //     input.value = el
+            //     console.log(input)
+            //     input.type = 'radio'
+            //     input.name = 'oranization'
+            //     console.log(input)
+            // label.appendChild(input)
+            //     let span = createElement('span')
+            //     span.class = 'checkbox radio'
+            //     let span2 = createElement('span')
+            //     span.class = 'description'
+            // label.appendChild(span)
+            // label.appendChild(span2)
+            //     let div2 = createElement('div')
+            //     div2.innerText = el
+            // span2.appendChild(div2)
+            // console.log(input)
+            })
+        }
+    )
+
+
 //   let listOfCategories = document.querySelectorAll("#categoriesOfThings")
 //
 //   let CategoriIDs = []

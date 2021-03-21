@@ -119,7 +119,7 @@
           <div data-step="2">
             <h3>Podaj liczbę 60l worków, w które spakowałeś/aś rzeczy:</h3>
 
-            <div class="form-group form-group--inline">
+            <div class="form-group form-group--inline" id="worki">
               <label>
                 Liczba 60l worków:
                 <input type="number" name="bags" step="1" min="1" />
@@ -128,14 +128,14 @@
 
             <div class="form-group form-group--buttons">
               <button type="button" class="btn prev-step">Wstecz</button>
-              <button type="button" class="btn next-step">Dalej</button>
+              <button type="button" class="btn next-step" id="step4">Dalej</button>
             </div>
           </div>
 
 
 
           <!-- STEP 4 -->
-          <div data-step="3">
+          <div data-step="3" id="StepFour">
             <h3>Wybierz organizacje, której chcesz pomóc:</h3>
             {%for i in institutions%}
             <div class="form-group form-group--checkbox">
